@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Real-Life Achievements</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>My Achievements</h1>
+    <div class="achievements-container">
+        <% achievements.forEach(achievement => { %>
+            <div class="achievement-card">
+                <a href="<%= achievement.imageUrl %>" target="_blank">
+                    <img src="<%= achievement.imageUrl %>" alt="<%= achievement.title %>" class="achievement-image">
+                </a>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>
