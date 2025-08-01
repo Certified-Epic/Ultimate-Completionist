@@ -4,75 +4,6 @@ body {
     font-family: sans-serif;
     margin: 0;
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.achievement-tracker-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
-#achievements-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    transform-origin: center center;
-    transition: transform 0.2s ease-in-out;
-}
-
-.achievement-node {
-    position: absolute;
-    cursor: pointer;
-    text-align: center;
-}
-
-.achievement-node img {
-    display: block;
-    width: 250px; /* Adjust size as needed */
-}
-
-/* Optional: Styles for achievement text if you add it */
-.achievement-node p {
-    margin: 5px 0 0;
-    font-size: 14px;
-    color: white;
-}
-
-.line {
-    position: absolute;
-    height: 2px;
-    background-color: #888;
-    z-index: -1;
-}
-
-.controls {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 10;
-}
-
-.controls button {
-    font-size: 24px;
-    padding: 10px 15px;
-    background-color: #555;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-left: 10px;
-}
-body {
-    background-color: #333;
-    color: #eee;
-    font-family: sans-serif;
-    margin: 0;
-    overflow: hidden;
     height: 100vh;
 }
 
@@ -96,11 +27,14 @@ body {
 }
 
 /* Hover animation for the circle */
+.node-circle {
+    transition: all 0.2s ease-in-out;
+}
+
 .node-circle:hover {
     stroke: gold;
     stroke-width: 3px;
     filter: drop-shadow(0 0 5px gold);
-    transition: all 0.2s ease-in-out;
 }
 
 /* Tooltip styles */
@@ -114,4 +48,5 @@ body {
     opacity: 0;
     transition: opacity 0.3s;
     font-size: 14px;
+    max-width: 250px;
 }
