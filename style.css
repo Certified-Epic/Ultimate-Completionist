@@ -1,33 +1,69 @@
 body {
-    font-family: sans-serif;
     background-color: #333;
-    color: #fff;
-    text-align: center;
+    color: #eee;
+    font-family: sans-serif;
     margin: 0;
-    padding: 20px;
-}
-
-h1 {
-    margin-bottom: 40px;
-}
-
-.achievements-container {
+    overflow: hidden;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    align-items: center;
+    height: 100vh;
 }
 
-.achievement-card {
-    border: 2px solid #555;
-    border-radius: 8px;
-    padding: 10px;
-    background-color: #222;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.achievement-tracker-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
-.achievement-image {
-    max-width: 100%;
-    height: auto;
+#achievements-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transform-origin: center center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.achievement-node {
+    position: absolute;
+    cursor: pointer;
+    text-align: center;
+}
+
+.achievement-node img {
     display: block;
+    width: 250px; /* Adjust size as needed */
+}
+
+/* Optional: Styles for achievement text if you add it */
+.achievement-node p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: white;
+}
+
+.line {
+    position: absolute;
+    height: 2px;
+    background-color: #888;
+    z-index: -1;
+}
+
+.controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+.controls button {
+    font-size: 24px;
+    padding: 10px 15px;
+    background-color: #555;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
 }
