@@ -99,52 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
-    // Zoom functionality
-    function updateTransform() {
-        achievementsContainer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-    }
-
-    zoomInButton.addEventListener('click', () => {
-        scale = Math.min(scale + 0.1, 2); // Max zoom level
-        updateTransform();
-    });
-
-    zoomOutButton.addEventListener('click', () => {
-        scale = Math.max(scale - 0.1, 0.5); // Min zoom level
-        updateTransform();
-    });
-
-    // Panning (drag and drop) functionality
-    zoomContainer.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        currentX = translateX;
-        currentY = translateY;
-        zoomContainer.style.cursor = 'grabbing';
-    });
-
-    zoomContainer.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        translateX = currentX + dx;
-        translateY = currentY + dy;
-        updateTransform();
-    });
-
-    zoomContainer.addEventListener('mouseup', () => {
-        isDragging = false;
-        zoomContainer.style.cursor = 'grab';
-    });
-
-    zoomContainer.addEventListener('mouseleave', () => {
-        isDragging = false;
-        zoomContainer.style.cursor = 'default';
-    });
-    
     // Initial render
     renderAchievements();
 });
