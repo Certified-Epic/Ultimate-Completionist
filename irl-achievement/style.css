@@ -1,50 +1,33 @@
-/* Basic styling for the body */
 body {
-    background-color: #313131; /* A dark, neutral background */
-    font-family: sans-serif; /* We will use a pixel font later */
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    font-family: sans-serif;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
     margin: 0;
+    padding: 20px;
 }
 
-/* Style for the achievement card */
+h1 {
+    margin-bottom: 40px;
+}
+
+.achievements-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
 .achievement-card {
-    display: flex;
-    align-items: center;
-    background-color: #1a1a1a; /* Dark background for the card */
-    border: 2px solid #555555; /* A subtle border */
-    border-radius: 8px; /* Rounded corners */
-    padding: 10px 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    width: 350px;
+    border: 2px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #222;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.achievement-icon {
-    margin-right: 15px;
-}
-
-.achievement-icon img {
-    width: 64px;
-    height: 64px;
-    image-rendering: pixelated; /* This is key for the pixelated look */
-}
-
-.achievement-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.achievement-title {
-    font-weight: bold;
-    font-size: 1.2em;
-    color: #fefefe;
-    margin-bottom: 5px;
-}
-
-.achievement-text {
-    font-size: 0.9em;
-    color: #aaaaaa;
+.achievement-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
