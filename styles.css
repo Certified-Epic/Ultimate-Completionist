@@ -1,0 +1,179 @@
+/* styles.css
+   Styles and keyframe animations for the star chart.
+   - Background zoom animation mimics flying through space.
+   - Node states: locked, unlocked (pulsing glow), completed (solid + check).
+*/
+
+/* Reset + base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html,body,#app { height: 100%; width: 100%; font-family: Inter, Roboto, system-ui, sans-serif; background: #020214; color: #dfefff; }
+
+/* Space background container */
+#space-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  background: radial-gradient(ellipse at center, rgba(10,14,20,0.6), #020214 40%);
+}
+#space-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  min-width: 120%;
+  min-height: 120%;
+  opacity: 0.25;
+  filter: blur(2px) contrast(110%);
+  animation: slow-zoom 30s linear infinite;
+  z-index: 0;
+}
+
+/* slow zoom to mimic movement through space */
+@keyframes slow-zoom {
+  0% { transform: translate(-50%,-50%) scale(1); }
+  50% { transform: translate(-52%,-50%) scale(1.04); }
+  100% { transform: translate(-50%,-50%) scale(1); }
+}
+
+/* Controls on top */
+#controls {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 30;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+#controls button {
+  background: rgba(255,255,255,0.06);
+  color: #e6f7ff;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 8px 12px;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+#controls button:active { transform: translateY(1px); }
+
+/* Legend */
+#legend { display:flex; gap:8px; align-items:center; color:#cfeeff; }
+.legend-item { display:flex; gap:8px; align-items:center; font-size:13px; background:rgba(255,255,255,0.03); padding:6px 8px; border-radius:8px; }
+.legend-item .node { width:18px; height:18px; display:inline-block; transform: rotate(45deg); border-radius:3px; box-shadow: 0 0 0 rgba(0,0,0,0.0); }
+
+/* SVG container */
+#star-chart {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: all;
+}
+
+/* Tooltip */
+#tooltip {
+  position: fixed;
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(20,30,40,0.98), rgba(8,12,18,0.98));
+  color: #eaf6ff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  max-width: 320px;
+  font-size: 13px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+#tooltip.hidden { display:none; }
+
+/* Node visual states (for legend small replicas) */
+.node.locked { background: #3b4450; transform: rotate(45deg); border: 1px solid rgba(255,255,255,0.03); }
+.node.unlocked { background: linear-gradient(180deg,#eaf6ff,#bfe9ff); box-shadow: 0 0 12px rgba(142,220,255,0.18); transform: rotate(45deg); animation: pulse 2s infinite; }
+.node.completed { background: linear-gradient(180deg,#ffd57a,#ffb86b); box-shadow: 0 0 18px rgba(255,200,110,0.28); transform: rotate(45deg); }
+
+/* pulse for unlocked nodes (SVG diamonds will use the same keyframe) */
+@keyframes pulse {
+  0% { transform: rotate(45deg) scale(1); filter: drop-shadow(0 0 0px rgba(120,200,255,0.0)); }
+  50% { transform: rotate(45deg) scale(1.06); filter: drop-shadow(0 0 18px rgba(120,200,255,0.14)); }
+  100% { transform: rotate(45deg) scale(1); filter: drop-shadow(0 0 0px rgba(120,200,255,0.0)); }
+}
+
+/* SVG styling for connections */
+path.connection {
+  fill: none;
+  stroke: rgba(160,180,200,0.08);
+  stroke-width: 2;
+  transition: stroke 300ms, stroke-width 300ms;
+}
+
+/* active connection between completed -> unlocked */
+path.connection.active {
+  stroke: url(#glowGradient);
+  stroke-width: 3.4;
+  filter: drop-shadow(0 0 10px rgba(120,200,255,0.18));
+  /* flowing dash animation */
+  stroke-dasharray: 8 8;
+  animation: flow 2s linear infinite;
+}
+
+/* flowing animation for active path */
+@keyframes flow {
+  to { stroke-dashoffset: -16; }
+}
+
+/* nodes (SVG groups) */
+.g-node { cursor: default; transition: transform 120ms ease; }
+.g-node[data-status="locked"] { opacity: 0.45; pointer-events: none; cursor: default; }
+.g-node[data-status="unlocked"] { pointer-events: auto; cursor: pointer; }
+.g-node[data-status="completed"] { pointer-events: auto; cursor: pointer; }
+
+/* diamond shape appearance (we use rect rotated) */
+.g-node rect.diamond {
+  width: 18px;
+  height: 18px;
+  rx: 3;
+  transform-origin: center;
+  transform: rotate(45deg);
+  stroke-width: 1.2;
+  transition: fill 160ms, stroke 160ms, transform 160ms;
+}
+
+/* state visuals */
+.g-node[data-status="locked"] rect.diamond {
+  fill: #3d4046;
+  stroke: rgba(255,255,255,0.03);
+  filter: none;
+}
+.g-node[data-status="unlocked"] rect.diamond {
+  fill: #eaf6ff;
+  stroke: rgba(120,200,255,0.9);
+  filter: drop-shadow(0 0 10px rgba(120,200,255,0.12));
+  animation: pulse 2s infinite;
+}
+.g-node[data-status="completed"] rect.diamond {
+  fill: #ffd57a;
+  stroke: rgba(255,200,110,0.95);
+  filter: drop-shadow(0 0 18px rgba(255,200,110,0.18));
+}
+
+/* checkmark overlay for completed */
+.g-node .check {
+  opacity: 0;
+  transform-origin: center;
+  transition: opacity 200ms, transform 200ms;
+}
+.g-node[data-status="completed"] .check { opacity: 1; transform: scale(1); }
+
+/* subtle hover expansion */
+.g-node[data-status="unlocked"]:hover,
+.g-node[data-status="completed"]:hover {
+  transform: translateY(-6px) scale(1.06);
+}
+
+/* responsive tweaks */
+@media (max-width:800px) {
+  #controls { left: 8px; top: 8px; gap:6px; }
+  #tooltip { font-size:12px; padding:8px 10px; max-width:240px; }
+}

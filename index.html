@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ULTIMATE 100% REAL LIFE ACHIEVEMENT TRACKER</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Full-screen space canvas -->
+    <div id="space-bg">
+      <img id="space-image" src="./9553f1ed-395b-45a6-a12b-e33025bd8308.png" alt="space-sigil" />
+    </div>
+
+    <!-- Controls -->
+    <div id="controls">
+      <button id="audio-toggle" title="Toggle background music">🔈 Music Off</button>
+      <div id="legend">
+        <div class="legend-item"><span class="node locked"></span> Locked</div>
+        <div class="legend-item"><span class="node unlocked"></span> Unlocked</div>
+        <div class="legend-item"><span class="node completed"></span> Completed</div>
+      </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="hidden"></div>
+
+    <!-- SVG Canvas -->
+    <svg id="star-chart" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid meet"></svg>
+
+    <!-- Audio placeholders (files live in audio/ folder) -->
+    <audio id="bg-audio" loop src="audio/bg_music.mp3" preload="auto"></audio>
+    <audio id="hover-audio" src="audio/hover.mp3" preload="auto"></audio>
+    <audio id="unlock-audio" src="audio/unlock.mp3" preload="auto"></audio>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
